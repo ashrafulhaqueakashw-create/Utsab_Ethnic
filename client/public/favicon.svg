@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="utsabGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B1518" />
+      <stop offset="100%" stop-color="#5E0D0F" />
+    </linearGradient>
+  </defs>
+  <!-- Background with rounded corners -->
+  <rect width="64" height="64" rx="16" fill="url(#utsabGrad)" />
+  <!-- Subtle gold inner border -->
+  <rect x="2.5" y="2.5" width="59" height="59" rx="13.5" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.5" />
+  <!-- Brand 'U' Monogram -->
+  <text x="32" y="45" font-family="'Cinzel', 'Playfair Display', Georgia, 'Times New Roman', serif" font-size="36" font-weight="700" fill="#FFFDF8" text-anchor="middle">U</text>
+</svg>
