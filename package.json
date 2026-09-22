@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Utsab Ethnic E-Commerce Platform",
   "scripts": {
+    "start": "node index.js",
+    "postinstall": "npm install --prefix server",
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
