@@ -17,7 +17,11 @@
 - **Repository Architecture:** Monorepo containing two isolated sub-applications:
   - `/client` — React 19 SPA powered by Vite, Tailwind CSS, Redux Toolkit
   - `/server` — Express 5 REST API powered by Node.js, MongoDB (Mongoose), Cloudinary
-- **Live Deployment:** `https://utsab-ethnic.vercel.app`
+- **Live Deployments & Hosting Architecture:**
+  - **Frontend:** `https://utsab-ethnic.vercel.app` (Hosted on Vercel)
+  - **Backend API:** `https://utsab-ethnic.onrender.com` (Hosted on Render)
+  - **Database:** MongoDB Atlas (Cloud Cluster)
+  - **CI/CD Pipeline:** Fully automated deployments on `git push origin main` for both Vercel and Render.
 
 ---
 
@@ -312,6 +316,8 @@ Utsab_Ethnic/
 | `PUT` | `/api/settings/delivery-fees` | Private/Admin | Update delivery fees & store info |
 | **Uploads** | | | |
 | `POST` | `/api/upload` | Private/Admin | Upload single image to Cloudinary (`multipart/form-data`) |
+| **Database Seeding** | | | |
+| `GET` | `/api/seed-db` | Public (Dev/Setup) | Populates MongoDB Atlas with demo users, categories, and 16 products |
 
 ---
 
@@ -390,6 +396,27 @@ CLOUDINARY_API_SECRET=your_api_secret
 VITE_API_URL=http://localhost:5000/api
 ```
 
+### Cloud Deployment Architecture & CI/CD Setup
+
+- **Frontend (Vercel):**
+  - **Live URL:** `https://utsab-ethnic.vercel.app`
+  - Connected to GitHub `main` branch with automatic deployment on `git push`.
+  - `client/vercel.json` provides reverse proxy rewrites:
+    - `/api/:path*` → `https://utsab-ethnic.onrender.com/api/:path*`
+    - `/images/:path*` → `https://utsab-ethnic.onrender.com/images/:path*`
+    - `/(.*)` → `/` (SPA routing fallback)
+  - Vercel Environment Variable: `VITE_API_URL=https://utsab-ethnic.onrender.com/api` (Plaintext / Config).
+- **Backend (Render):**
+  - **Live URL:** `https://utsab-ethnic.onrender.com`
+  - Connected to GitHub `main` branch with automatic redeployment on `git push`.
+  - Root entry point `index.js` bootstraps `server/index.js`.
+  - Free tier spin-down: Web service sleeps after 15 minutes of inactivity and wakes up upon receiving an HTTP request (~30–50s cold start).
+  - Database Seeding: Since free-tier Render disables interactive shell access, database seeding is performed via the 1-click endpoint `GET /api/seed-db` (`https://utsab-ethnic.onrender.com/api/seed-db`).
+- **Database (MongoDB Atlas):**
+  - Cloud database cluster connection configured in Render via `MONGO_URI`.
+  - Network Access: `0.0.0.0/0` ("Allow access from anywhere") must remain enabled in Atlas to permit Render's dynamic cloud IPs.
+  - Data persistence: Database records remain permanently intact across git commits and Vercel/Render redeployments.
+
 ### Essential Commands
 
 | Command | Working Directory | Description |
@@ -451,4 +478,8 @@ When generating or editing code in this repository, always follow these rules:
      - Subsections, filter options, individual product titles in `ProductCard`, and footer columns must be `<h3>`.
    - **Accessible Link & Button Names:** Every icon-only or text-free interactive link/button (e.g., shopping cart, wishlist, profile/login, modal close buttons, quantity adjusters) MUST include a descriptive `aria-label`. Mark decorative Lucide icons with `aria-hidden="true"`.
    - **Programmatic Form Labels:** Every `<select>` and `<input>` element must have an associated `<label>` (visually hidden with `sr-only` if not displayed in design) matching the input's `id`, alongside explicit `aria-label` attributes.
+10. **Resilient Category & Product Querying:**
+    - The backend `productController.js` accepts either a MongoDB `ObjectId` or a string `slug` for the `category` query parameter (`/api/products?category=panjabi`).
+    - The frontend `ProductList.jsx` passes `categoryParam` directly without waiting or skipping on `categories` load state.
+    - Always handle loading states (`isLoading || loadingCategories`) with spinners and connection/parsing errors (`PARSING_ERROR`, network timeouts) with informative user-facing alerts.
 
