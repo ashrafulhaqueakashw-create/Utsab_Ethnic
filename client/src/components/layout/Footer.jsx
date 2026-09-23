@@ -40,34 +40,40 @@ const Footer = () => {
         <div className="container-custom py-12 md:py-16">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
-              <p className="text-accent font-medium tracking-widest uppercase text-sm mb-2">
+              <p className="text-white font-medium tracking-widest uppercase text-sm mb-2">
                 Stay Tuned
               </p>
-              <h3 className="text-2xl md:text-3xl font-serif font-bold text-white">
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">
                 Subscribe for Exclusive Offers
-              </h3>
-              <p className="text-white/60 mt-2 text-sm">
+              </h2>
+              <p className="text-white/80 mt-2 text-sm">
                 Get early access to new collections, seasonal drops & exclusive discounts.
               </p>
             </div>
             <form onSubmit={handleSubscribe} className="flex w-full md:w-auto max-w-md">
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email address for newsletter
+              </label>
               <div className="relative flex-1">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
                 <input
+                  id="newsletter-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
+                  aria-label="Email address for newsletter"
                   className="w-full pl-11 pr-4 py-3.5 rounded-l-xl bg-white text-neutral-dark text-sm placeholder:text-gray-400 focus:outline-none"
                 />
               </div>
               <button
                 type="submit"
-                className="bg-accent hover:bg-accent-dark text-white px-6 py-3.5 rounded-r-xl font-medium text-sm transition-colors flex items-center gap-2 flex-shrink-0"
+                aria-label="Subscribe to newsletter"
+                className="bg-neutral-dark hover:bg-black text-white px-6 py-3.5 rounded-r-xl font-medium text-sm transition-colors flex items-center gap-2 flex-shrink-0"
               >
                 {subscribed ? '✓ Subscribed!' : (
-                  <>Subscribe <Send className="w-4 h-4" /></>
+                  <>Subscribe <Send className="w-4 h-4" aria-hidden="true" /></>
                 )}
               </button>
             </form>
@@ -111,9 +117,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-widest mb-5">
+            <h3 className="font-semibold text-sm uppercase tracking-widest mb-5">
               Quick Links
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {[
                 { name: 'Panjabi', path: '/category/panjabi' },
@@ -126,7 +132,7 @@ const Footer = () => {
                     to={link.path}
                     className="text-gray-400 hover:text-accent transition-colors text-sm flex items-center gap-1 group"
                   >
-                    <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
+                    <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" aria-hidden="true" />
                     {link.name}
                   </Link>
                 </li>
@@ -136,9 +142,9 @@ const Footer = () => {
 
           {/* Customer Service */}
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-widest mb-5">
+            <h3 className="font-semibold text-sm uppercase tracking-widest mb-5">
               Customer Service
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {[
                 'Contact Us',
@@ -152,7 +158,7 @@ const Footer = () => {
                     href="#"
                     className="text-gray-400 hover:text-accent transition-colors text-sm flex items-center gap-1 group"
                   >
-                    <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
+                    <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" aria-hidden="true" />
                     {item}
                   </a>
                 </li>
@@ -162,27 +168,27 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold text-sm uppercase tracking-widest mb-5">
+            <h3 className="font-semibold text-sm uppercase tracking-widest mb-5">
               Contact
-            </h4>
+            </h3>
             <div className="space-y-4 text-sm text-gray-400">
               <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 mt-0.5 text-accent flex-shrink-0" />
+                <MapPin className="w-4 h-4 mt-0.5 text-accent flex-shrink-0" aria-hidden="true" />
                 <span>House 12, Road 5, Dhanmondi,<br />Dhaka 1205, Bangladesh</span>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-accent flex-shrink-0" />
+                <Phone className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true" />
                 <span>+880 1700-000000</span>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-accent flex-shrink-0" />
+                <Mail className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true" />
                 <span>hello@utsabethnic.com</span>
               </div>
             </div>
 
             {/* Payment Methods */}
             <div className="mt-6">
-              <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">We Accept</p>
+              <p className="text-xs text-gray-400 uppercase tracking-widest mb-3">We Accept</p>
               <div className="flex gap-2 flex-wrap">
                 {['bKash', 'Nagad', 'COD', 'Visa'].map((method) => (
                   <span
@@ -200,12 +206,12 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
-        <div className="container-custom py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+        <div className="container-custom py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
           <p>&copy; {new Date().getFullYear()} Utsab Ethnic. All rights reserved.</p>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-accent transition-colors">Refund Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Refund Policy</a>
           </div>
         </div>
       </div>

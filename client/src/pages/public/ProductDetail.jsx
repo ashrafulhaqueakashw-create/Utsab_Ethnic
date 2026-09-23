@@ -257,12 +257,20 @@ const ProductDetail = () => {
             {/* Quantity & Add to Cart */}
             <div className="flex items-center gap-4 mb-6">
               <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-3.5 py-3 hover:bg-gray-50 transition">
-                  <Minus className="w-4 h-4" />
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  aria-label="Decrease quantity"
+                  className="px-3.5 py-3 hover:bg-gray-50 transition"
+                >
+                  <Minus className="w-4 h-4" aria-hidden="true" />
                 </button>
-                <span className="px-5 py-3 font-semibold text-sm border-x border-gray-200 min-w-[50px] text-center">{quantity}</span>
-                <button onClick={() => setQuantity(Math.min(selectedVariant?.stock || 10, quantity + 1))} className="px-3.5 py-3 hover:bg-gray-50 transition">
-                  <Plus className="w-4 h-4" />
+                <span className="px-5 py-3 font-semibold text-sm border-x border-gray-200 min-w-[50px] text-center" aria-label={`Quantity: ${quantity}`}>{quantity}</span>
+                <button
+                  onClick={() => setQuantity(Math.min(selectedVariant?.stock || 10, quantity + 1))}
+                  aria-label="Increase quantity"
+                  className="px-3.5 py-3 hover:bg-gray-50 transition"
+                >
+                  <Plus className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -277,16 +285,19 @@ const ProductDetail = () => {
               >
                 {added ? (
                   <>
-                    <Check className="w-5 h-5" /> Added to Cart!
+                    <Check className="w-5 h-5" aria-hidden="true" /> Added to Cart!
                   </>
                 ) : (
                   <>
-                    <ShoppingCart className="w-5 h-5" /> Add to Cart
+                    <ShoppingCart className="w-5 h-5" aria-hidden="true" /> Add to Cart
                   </>
                 )}
               </button>
-              <button className="border-2 border-gray-200 p-4 rounded-xl hover:bg-gray-50 hover:border-primary hover:text-primary transition-all duration-200">
-                <Heart className="w-5 h-5" />
+              <button
+                aria-label="Add to wishlist"
+                className="border-2 border-gray-200 p-4 rounded-xl hover:bg-gray-50 hover:border-primary hover:text-primary transition-all duration-200"
+              >
+                <Heart className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 

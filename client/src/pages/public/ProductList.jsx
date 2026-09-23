@@ -95,7 +95,12 @@ const ProductList = () => {
           <div className="hidden md:block" />
 
           <div className="flex items-center gap-3">
+            <label htmlFor="sort-products" className="sr-only">
+              Sort products by
+            </label>
             <select
+              id="sort-products"
+              aria-label="Sort products by"
               value={sort}
               onChange={(e) => updateFilter('sort', e.target.value)}
               className="input-field py-2.5 pr-10 text-sm w-auto"
@@ -118,12 +123,13 @@ const ProductList = () => {
           >
             {/* Mobile Close Button */}
             <div className="flex justify-between items-center md:hidden mb-6">
-              <h3 className="font-serif font-bold text-lg">Filters</h3>
+              <h2 className="font-serif font-bold text-lg">Filters</h2>
               <button
                 onClick={() => setShowFilters(false)}
+                aria-label="Close filters"
                 className="p-2 hover:bg-gray-100 rounded-lg"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
@@ -133,10 +139,10 @@ const ProductList = () => {
                 onClick={() => setExpandedFilters(prev => ({ ...prev, fabric: !prev.fabric }))}
                 className="flex items-center justify-between w-full mb-3"
               >
-                <h4 className="font-semibold text-xs uppercase tracking-[0.15em] text-gray-500">
+                <h3 className="font-semibold text-xs uppercase tracking-[0.15em] text-gray-500">
                   Fabric
-                </h4>
-                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${expandedFilters.fabric ? 'rotate-180' : ''}`} />
+                </h3>
+                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${expandedFilters.fabric ? 'rotate-180' : ''}`} aria-hidden="true" />
               </button>
               {expandedFilters.fabric && (
                 <div className="space-y-1 animate-fade-in">
@@ -163,9 +169,9 @@ const ProductList = () => {
                 onClick={() => setExpandedFilters(prev => ({ ...prev, collection: !prev.collection }))}
                 className="flex items-center justify-between w-full mb-3"
               >
-                <h4 className="font-semibold text-xs uppercase tracking-[0.15em] text-gray-500">
+                <h3 className="font-semibold text-xs uppercase tracking-[0.15em] text-gray-500">
                   Collection
-                </h4>
+                </h3>
                 <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${expandedFilters.collection ? 'rotate-180' : ''}`} />
               </button>
               {expandedFilters.collection && (
@@ -244,6 +250,7 @@ const ProductList = () => {
               </div>
             ) : (
               <>
+                <h2 className="sr-only">Product Catalog</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                   {data?.products?.map((product) => (
                     <ProductCard key={product._id} product={product} />

@@ -91,24 +91,27 @@ const Cart = () => {
                   <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden">
                     <button
                       onClick={() => updateQuantity(item, item.quantity - 1)}
+                      aria-label={`Decrease quantity of ${item.name}`}
                       className="px-2.5 py-1.5 hover:bg-gray-50 transition"
                     >
-                      <Minus className="w-3 h-3" />
+                      <Minus className="w-3 h-3" aria-hidden="true" />
                     </button>
-                    <span className="px-3 py-1.5 text-sm font-semibold border-x border-gray-200 min-w-[40px] text-center">{item.quantity}</span>
+                    <span className="px-3 py-1.5 text-sm font-semibold border-x border-gray-200 min-w-[40px] text-center" aria-label={`Quantity: ${item.quantity}`}>{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item, item.quantity + 1)}
+                      aria-label={`Increase quantity of ${item.name}`}
                       className="px-2.5 py-1.5 hover:bg-gray-50 transition"
                     >
-                      <Plus className="w-3 h-3" />
+                      <Plus className="w-3 h-3" aria-hidden="true" />
                     </button>
                   </div>
                   <p className="font-bold text-primary">{formatCurrency(item.price * item.quantity)}</p>
                   <button
                     onClick={() => dispatch(removeFromCart(item.variant.sku))}
+                    aria-label={`Remove ${item.name} from cart`}
                     className="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all duration-200"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-4 h-4" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -118,7 +121,7 @@ const Cart = () => {
 
         {/* Order Summary */}
         <div className="bg-white rounded-2xl p-6 shadow-card border border-gray-100/80 h-fit lg:sticky lg:top-28">
-          <h3 className="font-serif text-lg font-bold mb-5">Order Summary</h3>
+          <h2 className="font-serif text-lg font-bold mb-5">Order Summary</h2>
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">Subtotal ({totalItems} items)</span>

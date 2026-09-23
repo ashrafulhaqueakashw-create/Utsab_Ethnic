@@ -152,24 +152,29 @@ const Header = () => {
               </button>
 
               {/* Wishlist */}
-              <button className="hidden md:flex p-2.5 hover:bg-gray-100 rounded-lg transition-colors">
-                <Heart className="w-5 h-5 text-gray-600" />
+              <button
+                className="hidden md:flex p-2.5 hover:bg-gray-100 rounded-lg transition-colors"
+                aria-label="Wishlist"
+              >
+                <Heart className="w-5 h-5 text-gray-600" aria-hidden="true" />
               </button>
 
               {/* User */}
               <Link
                 to={userInfo ? '/profile' : '/login'}
+                aria-label={userInfo ? 'My Account' : 'Login'}
                 className="hidden md:flex p-2.5 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <User className="w-5 h-5 text-gray-600" />
+                <User className="w-5 h-5 text-gray-600" aria-hidden="true" />
               </Link>
 
               {/* Cart */}
               <Link
                 to="/cart"
+                aria-label={totalItems > 0 ? `Shopping Cart, ${totalItems} item${totalItems > 1 ? 's' : ''}` : 'Shopping Cart'}
                 className="relative p-2.5 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <ShoppingCart className="w-5 h-5 text-gray-600" />
+                <ShoppingCart className="w-5 h-5 text-gray-600" aria-hidden="true" />
                 {totalItems > 0 && (
                   <span className="absolute top-1 right-1 bg-primary text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                     {totalItems}
@@ -185,21 +190,23 @@ const Header = () => {
           <div className="border-t bg-white animate-fade-in-down">
             <div className="container-custom py-4">
               <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search for Panjabi, Pajama, Koti..."
+                  aria-label="Search products"
                   className="input-field pl-12 pr-12"
                   autoFocus
                 />
                 <button
                   type="button"
                   onClick={() => setSearchOpen(false)}
+                  aria-label="Close search"
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-4 h-4" aria-hidden="true" />
                 </button>
               </form>
             </div>
@@ -228,21 +235,23 @@ const Header = () => {
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
                 className="p-2 hover:bg-gray-100 rounded-lg"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
             {/* Mobile Drawer Search */}
             <div className="p-4 border-b bg-gray-50">
               <form onSubmit={handleSearch} className="relative">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" aria-hidden="true" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search products..."
+                  aria-label="Search products"
                   className="w-full pl-10 pr-4 py-2 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20"
                 />
               </form>

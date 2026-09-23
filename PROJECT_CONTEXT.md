@@ -17,6 +17,7 @@
 - **Repository Architecture:** Monorepo containing two isolated sub-applications:
   - `/client` — React 19 SPA powered by Vite, Tailwind CSS, Redux Toolkit
   - `/server` — Express 5 REST API powered by Node.js, MongoDB (Mongoose), Cloudinary
+- **Live Deployment:** `https://utsab-ethnic.vercel.app`
 
 ---
 
@@ -439,3 +440,15 @@ When generating or editing code in this repository, always follow these rules:
    - For local mobile testing over Wi-Fi, ensure the host Windows network profile is set to "Private" to allow port 5173 access.
    - Header brand logo (`[U] UTSAB ETHNIC`) is visible across all screen sizes.
    - Hero carousel navigation arrows are hidden on mobile (`hidden sm:flex`) to avoid overlapping description text.
+9. **Accessibility (WCAG 2.1 AA) & Semantic Standards:**
+   - **Color Contrast:** All text must strictly satisfy the 4.5:1 ratio requirement (and 3:1 for large text / graphical UI).
+     - On `primary` (`#800000`) backgrounds: Use `text-white` (9.55:1) or `text-white/80` (> 6.5:1). Never use `text-accent` (`#e07a5f`, 3.71:1) or low-opacity white `text-white/60` (4.47:1) on primary dark maroon.
+     - On `accent` (`#e07a5f`) elements: Use dark text (e.g. `text-neutral-900`) or use `bg-neutral-dark text-white` for buttons on primary banners (16.15:1). Pure white on `accent` yields 2.95:1 and fails WCAG AA.
+     - On `neutral-dark` (`#222222`) backgrounds: Use `text-gray-400` (6.34:1) or `text-gray-300` (9.07:1). Avoid `text-gray-500` (3.29:1).
+   - **Heading Hierarchy:** Maintain sequentially-descending heading outlines without skipping levels (`<h1>` → `<h2>` → `<h3>`).
+     - Category/Page titles must be `<h1>`.
+     - Primary section headings (Sidebar filters, product catalog, newsletter footer) must be `<h2>`. When a visual section title isn't needed, use `<h2 className="sr-only">Product Catalog</h2>`.
+     - Subsections, filter options, individual product titles in `ProductCard`, and footer columns must be `<h3>`.
+   - **Accessible Link & Button Names:** Every icon-only or text-free interactive link/button (e.g., shopping cart, wishlist, profile/login, modal close buttons, quantity adjusters) MUST include a descriptive `aria-label`. Mark decorative Lucide icons with `aria-hidden="true"`.
+   - **Programmatic Form Labels:** Every `<select>` and `<input>` element must have an associated `<label>` (visually hidden with `sr-only` if not displayed in design) matching the input's `id`, alongside explicit `aria-label` attributes.
+

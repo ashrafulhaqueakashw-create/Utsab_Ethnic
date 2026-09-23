@@ -100,9 +100,9 @@ const ProductCard = ({ product }) => {
                            ? 'bg-red-50 text-red-500 opacity-100'
                            : 'bg-white/90 text-gray-700 opacity-0 group-hover:opacity-100 hover:bg-primary hover:text-white'
                        }`}
-            aria-label="Add to wishlist"
+            aria-label={isWished ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
           >
-            <Heart className={`w-4 h-4 ${isWished ? 'fill-red-500' : ''}`} />
+            <Heart className={`w-4 h-4 ${isWished ? 'fill-red-500' : ''}`} aria-hidden="true" />
           </button>
         </div>
 
@@ -110,6 +110,7 @@ const ProductCard = ({ product }) => {
         <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
           <button
             onClick={handleQuickAdd}
+            aria-label={added ? `Added ${product.name} to cart` : `Quick add ${product.name} to cart`}
             className={`w-full py-2.5 backdrop-blur-sm text-white text-xs font-semibold uppercase tracking-wider rounded-lg
                        transition-all duration-300 flex items-center justify-center gap-2 ${
                          added
@@ -119,11 +120,11 @@ const ProductCard = ({ product }) => {
           >
             {added ? (
               <>
-                <Check className="w-3.5 h-3.5" /> Added!
+                <Check className="w-3.5 h-3.5" aria-hidden="true" /> Added!
               </>
             ) : (
               <>
-                <ShoppingCart className="w-3.5 h-3.5" /> Quick Add
+                <ShoppingCart className="w-3.5 h-3.5" aria-hidden="true" /> Quick Add
               </>
             )}
           </button>
