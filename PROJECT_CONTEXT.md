@@ -22,6 +22,7 @@
   - **Backend API:** `https://utsab-ethnic.onrender.com` (Hosted on Render)
   - **Database:** MongoDB Atlas (Cloud Cluster)
   - **CI/CD Pipeline:** Fully automated deployments on `git push origin main` for both Vercel and Render.
+  - **Portfolio Integration:** Featured as a flagship full-stack case study in [Ashraful Haque Akash's Developer Portfolio](https://ashrafulhaqueakashw-create.github.io/My_Portfolio).
 
 ---
 
