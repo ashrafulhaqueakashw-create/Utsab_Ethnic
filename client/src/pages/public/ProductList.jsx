@@ -28,18 +28,18 @@ const ProductList = () => {
   const collection = searchParams.get('collection') || '';
   const keyword = searchParams.get('keyword') || searchParams.get('search') || '';
 
-  const { data: categories } = useGetCategoriesQuery();
+  const { data: categories, isLoading: loadingCategories, error: errorCategories } = useGetCategoriesQuery();
   const category = categories?.find((c) => c.slug === slug);
 
-  const shouldSkip = !category && !keyword && slug && slug !== 'all';
+  const categoryParam = category?._id || (slug && slug !== 'all' ? slug : undefined);
   const { data, isLoading, error } = useGetProductsQuery({
-    category: category?._id,
+    category: categoryParam,
     page,
     sort,
     fabric,
     collection,
     keyword,
-  }, { skip: shouldSkip });
+  });
 
   const updateFilter = (key, value) => {
     const params = new URLSearchParams(searchParams);
@@ -236,10 +236,15 @@ const ProductList = () => {
               </div>
             )}
 
-            {isLoading ? (
+            {isLoading || loadingCategories ? (
               <Loader />
-            ) : error ? (
-              <Message variant="danger">{error?.data?.message || 'Failed to load products'}</Message>
+            ) : error || errorCategories ? (
+              <Message variant="danger">
+                {error?.data?.message ||
+                  (error?.status === 'PARSING_ERROR' || errorCategories?.status === 'PARSING_ERROR'
+                    ? 'Unable to reach backend API. If on Vercel, please set VITE_API_URL to your Render backend URL in Vercel settings.'
+                    : 'Failed to load products. Backend API may be waking up, please refresh.')}
+              </Message>
             ) : data?.products?.length === 0 ? (
               <div className="text-center py-24">
                 <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">

@@ -1,4 +1,6 @@
 const Product = require('../models/Product');
+const Category = require('../models/Category');
+const mongoose = require('mongoose');
 
 // @desc    Fetch all products with filtering, sorting, pagination
 // @route   GET /api/products
@@ -8,10 +10,16 @@ const getProducts = async (req, res, next) => {
     const pageSize = Number(req.query.limit) || 12;
     const page = Number(req.query.page) || 1;
 
-    // Filter by Category
-    const categoryFilter = req.query.category ? { 
-       category: req.query.category // Assumes ID is passed, could also query by slug if needed
-    } : {};
+    // Filter by Category (supports ObjectId or slug)
+    let categoryFilter = {};
+    if (req.query.category) {
+      if (mongoose.Types.ObjectId.isValid(req.query.category)) {
+        categoryFilter = { category: req.query.category };
+      } else {
+        const cat = await Category.findOne({ slug: req.query.category });
+        categoryFilter = cat ? { category: cat._id } : { category: null };
+      }
+    }
 
     // Filter by tags/collections
     const collectionFilter = req.query.collection ? { collections: { $in: [req.query.collection] } } : {};
