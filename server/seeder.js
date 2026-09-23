@@ -7,7 +7,9 @@ const Category = require('./src/models/Category');
 const Order = require('./src/models/Order');
 const connectDB = require('./src/config/db');
 
-connectDB();
+if (require.main === module) {
+  connectDB();
+}
 
 const users = [
   {
@@ -338,7 +340,7 @@ const getProductsData = (createdCategories) => {
   ];
 };
 
-const importData = async () => {
+const importData = async (exitOnComplete = true) => {
   try {
     await Order.deleteMany();
     await Product.deleteMany();
@@ -353,14 +355,20 @@ const importData = async () => {
     await Product.insertMany(sampleProducts);
 
     console.log('Data Imported successfully!');
-    process.exit();
+    if (exitOnComplete) process.exit();
+    return {
+      users: createdUsers.length,
+      categories: createdCategories.length,
+      products: sampleProducts.length,
+    };
   } catch (error) {
     console.error(`${error}`);
-    process.exit(1);
+    if (exitOnComplete) process.exit(1);
+    throw error;
   }
 };
 
-const destroyData = async () => {
+const destroyData = async (exitOnComplete = true) => {
   try {
     await Order.deleteMany();
     await Product.deleteMany();
@@ -368,15 +376,21 @@ const destroyData = async () => {
     await Category.deleteMany();
 
     console.log('Data Destroyed!');
-    process.exit();
+    if (exitOnComplete) process.exit();
+    return true;
   } catch (error) {
     console.error(`${error}`);
-    process.exit(1);
+    if (exitOnComplete) process.exit(1);
+    throw error;
   }
 };
 
-if (process.argv[2] === '-d') {
-  destroyData();
-} else {
-  importData();
+if (require.main === module) {
+  if (process.argv[2] === '-d') {
+    destroyData();
+  } else {
+    importData();
+  }
 }
+
+module.exports = { importData, destroyData };

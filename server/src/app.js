@@ -34,6 +34,21 @@ app.get('/api', (req, res) => {
   res.json({ message: 'API is running...' });
 });
 
+// Database seeding endpoint (convenient one-time setup for free tier hosting)
+app.get('/api/seed-db', async (req, res) => {
+  try {
+    const { importData } = require('../seeder');
+    const result = await importData(false);
+    res.json({
+      success: true,
+      message: 'Database seeded successfully!',
+      seeded: result,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Error Handling Middleware
 app.use(notFound);
 app.use(errorHandler);
