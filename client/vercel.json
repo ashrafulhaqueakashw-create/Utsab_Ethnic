@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "https://utsab-ethnic.onrender.com/api/:path*"
+    },
+    {
+      "source": "/images/:path*",
+      "destination": "https://utsab-ethnic.onrender.com/images/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }
